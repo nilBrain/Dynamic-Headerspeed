@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="73">
+	<author>Vertex Dezign</author>
+    <version>1.0.0.0</version>
+    <title>
+        <en>dynamic Headerspeed</en>
+        <de>Dynamische Haspel Geschwindigkeit</de>
+    </title>
+
+    <description>
+        <en>
+            <![CDATA[This Mod allows the Reel from the Cutter to dynamically adjust to the travel speed.
+To do this, you can adjust the factor in the Game settings to adjust the advance for better harvesting result.]]>
+        </en>
+        <de>
+            <![CDATA[Dieser Mod ermöglicht es, dass sich die Haspel vom Schneidwerk dynamisch zur Fahrtgeschwindigkeit anpasst.
+Dazu kann man in den Spieleinstellungen den Faktor anpassen, um den Vorlauf für besseres Ernteergebnis anzupassen.]]>
+        </de>
+    </description>
+
+    <iconFilename>icon.dds</iconFilename>
+    <multiplayer supported="true" />
+
+    <extraSourceFiles>
+        <sourceFile filename="src/DynamicHeaderSpeedSetting.lua" />
+        <sourceFile filename="src/DynamicHeaderSpeedSettingEvent.lua" />
+        <sourceFile filename="src/register.lua" />
+    </extraSourceFiles>
+
+    <registerSpecializations>
+        <specialization name="dynamicHeaderSpeed" className="DynamicHeaderSpeed" filename="src/DynamicHeaderSpeed.lua" />
+    </registerSpecializations>
+
+    <l10n>
+        <text name="title_dynamicHeaderSpeed">
+            <en>Dynamic Header speed</en>
+            <de>Dynamische Haspel Geschwindigkeit</de>
+        </text>
+
+        <text name="setting_dynamicHeaderSpeed">
+            <en>Change the Header speed</en>
+            <de>Anpassen der Haspelgeschwindigkeit</de>
+        </text>
+
+        <text name="toolTip_dynamicHeaderSpeed">
+            <en>Change the Header speed</en>
+            <de>Anpassen der Haspelgeschwindigkeit</de>
+        </text>
+
+    </l10n>
+</modDesc>
