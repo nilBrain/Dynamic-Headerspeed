@@ -23,6 +23,21 @@ function DynamicHeaderSpeedSetting:getSpeedIndex()
     return self.speedIndex or self.defaultIndex;
 end;
 
+function DynamicHeaderSpeedSetting:getValidSpeedIndex(value)
+    local index = value;
+
+    if MathUtil.getIsOutOfBounds(value, 1, #self.settings) then
+        if value > #self.settings then
+            index = 1;
+        else
+            index = #self.settings;
+        end;
+    end;
+
+    return index;
+end;
+
+
 function DynamicHeaderSpeedSetting:getIndexFromSpeed(speedScale)
     for index, speed in pairs(self.settings) do
         if speed == tostring(speedScale) then
@@ -100,10 +115,9 @@ InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGe
     self.dynamicHeaderSpeed.title:setVisible(isVisable);
 
     if isVisable then
-        header = g_dynamicHeaderSpeedSetting.getHeader(g_currentMission.controlledVehicle);
-        local speedIndex = g_dynamicHeaderSpeedSetting:getIndexFromSpeed(header:getHeaderSpeed());
-        self.dynamicHeaderSpeed:setState(speedIndex);
-    end
+        self.dynamicHeaderSpeed:setState(g_dynamicHeaderSpeedSetting:getIndexFromSpeed(header:getHeaderSpeed()));
+    end;
+
     self.boxLayout:invalidateLayout();
 end);
 

@@ -47,5 +47,30 @@ Dazu kann man in den Spieleinstellungen den Faktor anpassen, um den Vorlauf für
             <de>Anpassen der Haspelgeschwindigkeit</de>
         </text>
 
+        <text name="action_changeHeaderSpeedLevel">
+            <en>Header speed</en>
+            <de>Haspelgeschwindigkeit</de>
+        </text>
+
+        <text name="input_DHS_AXIS_HEADERSPEED_1">
+            <en>Increase reel advance</en>
+            <de>Haspel vorlauf erhöhen</de>
+        </text>
+
+        <text name="input_DHS_AXIS_HEADERSPEED_2">
+            <en>Decrease reel advance</en>
+            <de>Haspel vorlauf vermindern</de>
+        </text>
     </l10n>
+
+    <actions>
+        <action name="DHS_AXIS_HEADERSPEED" category="VEHICLE" axisType="FULL"/>
+    </actions>
+
+    <inputBinding>
+        <actionBinding action="DHS_AXIS_HEADERSPEED">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_slash" axisComponent="-" neutralInput="0" index="1"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lshift KEY_slash" axisComponent="+" neutralInput="0" index="1"/>
+        </actionBinding>
+    </inputBinding>
 </modDesc>

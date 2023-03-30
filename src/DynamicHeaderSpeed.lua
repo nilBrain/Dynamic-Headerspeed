@@ -26,12 +26,14 @@ end;
 
 function DynamicHeaderSpeed.registerEventListeners(vehicleType)
 	SpecializationUtil.registerEventListener(vehicleType, "onLoad", DynamicHeaderSpeed);
+	SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", DynamicHeaderSpeed);
 	SpecializationUtil.registerEventListener(vehicleType, "onUpdate", DynamicHeaderSpeed);
 end;
 
 function DynamicHeaderSpeed.registerFunctions(vehicleType)
 	SpecializationUtil.registerFunction(vehicleType, "getHeaderSpeed", DynamicHeaderSpeed.getHeaderSpeed);
 	SpecializationUtil.registerFunction(vehicleType, "setHeaderSpeedScale", DynamicHeaderSpeed.setHeaderSpeedScale);
+	SpecializationUtil.registerFunction(vehicleType, "actionEventHeaderSpeedValue", DynamicHeaderSpeed.actionEventHeaderSpeedValue);
 end;
 
 function DynamicHeaderSpeed:onLoad(savegame)
@@ -75,6 +77,20 @@ function DynamicHeaderSpeed:saveToXMLFile(xmlFile, key, usedModNames)
 	xmlFile:setValue(key .. "#speedIndex", speedIndex);
 end
 
+function DynamicHeaderSpeed:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
+    if self.isClient then
+        local spec = self.spec_dynamicHeaderSpeed;
+
+        if isActiveForInput then
+            local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.DHS_AXIS_HEADERSPEED, self, DynamicHeaderSpeed.actionEventHeaderSpeedValue, false, true, false, true, nil);
+
+			spec.lastCruiseControlActionEventId = actionEventId;
+
+			DynamicHeaderSpeed.updateActionEventTexts(self);
+			g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_NORMAL);
+		end;
+	end;
+end;
 
 function DynamicHeaderSpeed:onUpdate()
 	if self.isClient then
@@ -97,11 +113,18 @@ function DynamicHeaderSpeed:onUpdate()
 	end;
 end;
 
-
 function DynamicHeaderSpeed:getHeaderSpeed()
 	return self.spec_dynamicHeaderSpeed.headerSpeedScale;
 end;
 
+function DynamicHeaderSpeed:updateActionEventTexts()
+    local spec = self.spec_dynamicHeaderSpeed;
+
+    if spec.lastCruiseControlActionEventId ~= nil then
+		local text = string.format("%s [%s]", g_i18n:getText("action_changeHeaderSpeedLevel"), self:getHeaderSpeed());
+		g_inputBinding:setActionEventText(spec.lastCruiseControlActionEventId, text);
+	end;
+end;
 
 function DynamicHeaderSpeed:setHeaderSpeedScale(speedIndex, noEventSend)
 
@@ -113,5 +136,17 @@ function DynamicHeaderSpeed:setHeaderSpeedScale(speedIndex, noEventSend)
 		end
 
 		spec.headerSpeedScale = g_dynamicHeaderSpeedSetting:getSpeedFromIndex(speedIndex);
+
+		if self.isClient then
+			DynamicHeaderSpeed.updateActionEventTexts(self);
+		end;
 	end;
+end;
+
+
+function DynamicHeaderSpeed:actionEventHeaderSpeedValue(actionName, inputValue, callbackState, isAnalog)
+	local spec = self.spec_dynamicHeaderSpeed;
+	local value = g_dynamicHeaderSpeedSetting:getIndexFromSpeed(spec.headerSpeedScale) + inputValue;
+
+	self:setHeaderSpeedScale(g_dynamicHeaderSpeedSetting:getValidSpeedIndex(value));
 end;
