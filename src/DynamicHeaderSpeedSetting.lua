@@ -81,12 +81,19 @@ InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGe
 
         self.boxLayout:addElement(title);
 
+        local headerText = TextElement.new();
+        headerText:applyProfile("ingameMenuHelpRowText", true);
+        headerText:setText(g_i18n:getText("text_DHS_moHeader"));
+
+        self.boxLayout:addElement(headerText);
+
         local target = g_dynamicHeaderSpeedSetting;
         self.dynamicHeaderSpeed = self.checkUseEasyArmControl:clone()
         self.dynamicHeaderSpeed.target = target;
         self.dynamicHeaderSpeed.id = "dynamicHeaderSpeed";
 
         self.dynamicHeaderSpeed.title = title;
+        self.dynamicHeaderSpeed.headerText = headerText;
 
         self.dynamicHeaderSpeed:setTexts(g_dynamicHeaderSpeedSetting.settings);
 
@@ -112,7 +119,7 @@ InGameMenuGeneralSettingsFrame.onFrameOpen = Utils.appendedFunction(InGameMenuGe
     local isVisable = header ~= nil and header.spec_dynamicHeaderSpeed ~= nil;
 
     self.dynamicHeaderSpeed:setVisible(isVisable);
-    self.dynamicHeaderSpeed.title:setVisible(isVisable);
+    self.dynamicHeaderSpeed.headerText:setVisible(not isVisable);
 
     if isVisable then
         self.dynamicHeaderSpeed:setState(g_dynamicHeaderSpeedSetting:getIndexFromSpeed(header:getHeaderSpeed()));

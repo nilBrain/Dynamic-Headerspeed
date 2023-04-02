@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="73">
 	<author>Vertex Dezign</author>
-    <version>1.0.0.0</version>
+    <version>1.1.0.0</version>
     <title>
         <en>dynamic Headerspeed</en>
         <de>Dynamische Haspel Geschwindigkeit</de>
@@ -10,11 +10,17 @@
     <description>
         <en>
             <![CDATA[This Mod allows the Reel from the Cutter to dynamically adjust to the travel speed.
-To do this, you can adjust the factor in the Game settings to adjust the advance for better harvesting result.]]>
+To do this, you can adjust the factor in the Game settings to adjust the advance for better harvesting result.
+
+v1.1.0.0:
+- Keys added in to set the advance of the reel from the vehicle.]]>
         </en>
         <de>
             <![CDATA[Dieser Mod ermöglicht es, dass sich die Haspel vom Schneidwerk dynamisch zur Fahrtgeschwindigkeit anpasst.
-Dazu kann man in den Spieleinstellungen den Faktor anpassen, um den Vorlauf für besseres Ernteergebnis anzupassen.]]>
+Dazu kann man in den Spieleinstellungen den Faktor anpassen, um den Vorlauf für besseres Ernteergebnis anzupassen.
+
+v1.1.0.0:
+- Tasten hinzugefügt im den Vorlauf der Haspel aus dem Fahrzeug einzustellen.]]>
         </de>
     </description>
 
@@ -35,6 +41,11 @@ Dazu kann man in den Spieleinstellungen den Faktor anpassen, um den Vorlauf für
         <text name="title_dynamicHeaderSpeed">
             <en>Dynamic Header speed</en>
             <de>Dynamische Haspel Geschwindigkeit</de>
+        </text>
+
+        <text name="text_DHS_moHeader">
+            <en>Settings available when you are in a vehicle with a reel.</en>
+            <de>Einstellungen erst verfügbar, wenn Sie in einem Fahrzeug mit Haspel sitzen.</de>
         </text>
 
         <text name="setting_dynamicHeaderSpeed">
